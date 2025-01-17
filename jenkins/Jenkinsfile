@@ -2,12 +2,15 @@ pipeline {
     agent any
     
     stages{
-        stage('Build'){
-            steps {
-                sh 'mvn -B -DskipTests clean package'
+        stage("Build"){
+            steps{
+                dir("simple-java-maven-app"){
+                    sh "sed -i 's/3.9.2/3.8.7/g' pom.xml"
+                    sh "mvn -B -DskipTests clean package"
+                }
             }
         }
-        stage('Test') {
+        tage('Test') {
             steps {
                 sh 'mvn test'
             }
