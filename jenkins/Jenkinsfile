@@ -1,12 +1,22 @@
 pipeline {
     agent any
-    stages {
-        stage('Build') {
+    
+    stages{
+        stage("Clean Up"){
             steps {
-                sh 'mvn -B -DskipTests clean package'
+                deleteDir()
+            }
+        
+        }
+        stage("Build"){
+            steps{
+                dir("simple-java-maven-app"){
+                    sh "sed -i 's/3.9.2/3.8.7/g' pom.xml"
+                    sh "mvn -B -DskipTests clean package"
+                }
             }
         }
-        stage('Test') {
+        tage('Test') {
             steps {
                 sh 'mvn test'
             }
@@ -20,6 +30,5 @@ pipeline {
             steps {
                 sh './jenkins/scripts/deliver.sh'
             }
-        }
     }
 }
