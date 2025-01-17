@@ -5,6 +5,7 @@ pipeline {
         stage("Build"){
             steps{
                 dir("simple-java-maven-app"){
+                    sh "ls -ltr"
                     sh "sed -i 's/3.9.2/3.8.7/g' /simple-java-maven-app/pom.xml"
                     sh "mvn -B -DskipTests clean package"
                 }
