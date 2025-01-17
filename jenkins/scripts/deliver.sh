@@ -7,12 +7,12 @@ set +x
 
 echo 'Extracting project name from pom.xml...'
 set -x
-NAME=$(mvn -B -q -DforceStdout help:evaluate -Dexpression=project.name | tr -d '\r' | tr -d '\033')
+NAME=$(mvn -B help:evaluate -Dexpression=project.name | grep -v "^\[" | tail -1)
 set +x
 
 echo 'Extracting project version from pom.xml...'
 set -x
-VERSION=$(mvn -B -q -DforceStdout help:evaluate -Dexpression=project.version | tr -d '\r' | tr -d '\033')
+VERSION=$(mvn -B help:evaluate -Dexpression=project.version | grep -v "^\[" | tail -1)
 set +x
 
 echo "Project Name: $NAME"
