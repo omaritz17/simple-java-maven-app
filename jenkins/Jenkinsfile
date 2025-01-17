@@ -3,8 +3,8 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh '''sed -i 's|<version>[3.9.2,)|<version>[3.8.7,)|g' pom.xml'''  // Adjust version range if needed
-                sh 'cat pom.xml'  // Verify changes
+                sh '''sed -i 's|<version>[3.9.2,)|<version>[3.8.7,)|g' pom.xml'''
+                sh 'cat pom.xml'  // Verify the changes
                 sh 'mvn -B -Denforcer.skip=true -DskipTests clean package'  // Skip Enforcer if needed
             }
         }
