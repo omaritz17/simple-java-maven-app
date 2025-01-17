@@ -1,11 +1,11 @@
 pipeline {
-    agent any 
+    agent any
     stages {
         stage('Build') {
             steps {
-                // Corrected sed command
-                sh '''sed -i 's/<version>3.9.2<\/version>/<version>3.8.7<\/version>/g' pom.xml'''
-                // Verify the changes in pom.xml
+                // Using alternative delimiter | in sed to avoid backslashes
+                sh "sed -i 's|<version>3.9.2</version>|<version>3.8.7</version>|g' pom.xml"
+                // Verify changes to pom.xml
                 sh 'cat pom.xml'
                 // Build the project
                 sh 'mvn -B -DskipTests clean package'
