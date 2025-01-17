@@ -1,6 +1,11 @@
 pipeline {
     agent any
     stages {
+        stage('Verify Maven Installation') {
+            steps {
+                sh 'which mvn || echo "Maven is not installed"'
+                sh 'mvn -v || echo "Maven is not accessible"'
+            }
         stage('Build') {
             steps {
                 sh 'mvn -B -DskipTests clean package'
