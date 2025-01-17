@@ -2,12 +2,6 @@ pipeline {
     agent any
     
     stages{
-        stage("Clean Up"){
-            steps {
-                deleteDir()
-            }
-        
-        }
         stage("Build"){
             steps{
                 dir("simple-java-maven-app"){
