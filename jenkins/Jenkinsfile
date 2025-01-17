@@ -3,8 +3,10 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh "sed -i 's/3.9.2/3.8.7/g' pom.xml"
+                sh "sed -i 's/<version>3.9.2<\/version>/<version>3.8.7<\/version>/g' pom.xml"
+                sh 'cat pom.xml'  // Debug POM changes
                 sh 'mvn -B -DskipTests clean package'
+                sh 'ls -l target'  // Verify JAR generation
             }
         }
         stage('Test') {
