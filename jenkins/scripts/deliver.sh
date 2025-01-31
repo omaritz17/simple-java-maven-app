@@ -1,28 +1,51 @@
 #!/usr/bin/env bash
 
-echo 'Building the Maven project...'
+echo 'The following Maven command installs your Maven-built Java application'
+echo 'into the local Maven repository, which will ultimately be stored in'
+echo 'Jenkins''s local Maven repository (and the "maven-repository" Docker data'
+echo 'volume).'
 set -x
-mvn clean package
+mvn jar:jar install:install help:evaluate -Dexpression=project.name
 set +x
 
-echo 'Extracting the project name...'
+echo 'The following command extracts the value of the <name/> element'
+echo 'within <project/> of your Java/Maven project''s "pom.xml" file.'
 set -x
-NAME=$(mvn -q -DforceStdout help:evaluate -Dexpression=project.name)
+NAME=`mvn -q -DforceStdout help:evaluate -Dexpression=project.name`
 set +x
 
-echo 'Extracting the project version...'
+echo 'The following command behaves similarly to the previous one but'
+echo 'extracts the value of the <version/> element within <project/> instead.'
 set -x
-VERSION=$(mvn -q -DforceStdout help:evaluate -Dexpression=project.version)
+VERSION=`mvn -q -DforceStdout help:evaluate -Dexpression=project.version`
 set +x
 
-JAR_FILE="target/${NAME}-${VERSION}.jar"
+echo 'The following command runs and outputs the execution of your Java'
+echo 'application (which Jenkins built using Maven) to the Jenkins UI.'
+set -x#!/usr/bin/env bash
 
-echo "Checking if $JAR_FILE exists..."
-if [ ! -f "$JAR_FILE" ]; then
-    echo "Error: JAR file $JAR_FILE not found. Build might have failed."
-    exit 1
-fi
-
-echo 'Running the Java application...'
+echo 'The following Maven command installs your Maven-built Java application'
+echo 'into the local Maven repository, which will ultimately be stored in'
+echo 'Jenkins''s local Maven repository (and the "maven-repository" Docker data'
+echo 'volume).'
 set -x
-java -jar "$JAR_FILE"
+mvn jar:jar install:install help:evaluate -Dexpression=project.name
+set +x
+
+echo 'The following command extracts the value of the <name/> element'
+echo 'within <project/> of your Java/Maven project''s "pom.xml" file.'
+set -x
+NAME=`mvn -q -DforceStdout help:evaluate -Dexpression=project.name`
+set +x
+
+echo 'The following command behaves similarly to the previous one but'
+echo 'extracts the value of the <version/> element within <project/> instead.'
+set -x
+VERSION=`mvn -q -DforceStdout help:evaluate -Dexpression=project.version`
+set +x
+
+echo 'The following command runs and outputs the execution of your Java'
+echo 'application (which Jenkins built using Maven) to the Jenkins UI.'
+set -x
+java -jar target/my-app-1.0.jar
+java -jar target/${NAME}-${VERSION}.jar
