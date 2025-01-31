@@ -7,12 +7,12 @@ set +x
 
 echo 'Extracting the project name...'
 set -x
-NAME=$(mvn -q -DforceStdout help:evaluate -Dexpression=project.name | awk '{print $1}')
+NAME=$(mvn -q -DforceStdout help:evaluate -Dexpression=project.name | tr -d '[:space:][:cntrl:]')
 set +x
 
 echo 'Extracting the project version...'
 set -x
-VERSION=$(mvn -q -DforceStdout help:evaluate -Dexpression=project.version | awk '{print $1}')
+VERSION=$(mvn -q -DforceStdout help:evaluate -Dexpression=project.version | tr -d '[:space:][:cntrl:]')
 set +x
 
 JAR_FILE="target/${NAME}-${VERSION}.jar"
